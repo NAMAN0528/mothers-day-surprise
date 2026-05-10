@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mother's Day Surprise</title>
+
+<style>
+
+body{
+margin:0;
+text-align:center;
+font-family:Arial;
+background:linear-gradient(#ffb6d9,#fff5f8);
+overflow:hidden;
+}
+
+h1{
+margin-top:80px;
+color:#ff2e7a;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+margin:10px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#ff4d94;
+color:white;
+}
+
+#gift{
+font-size:75px;
+cursor:pointer;
+}
+
+#bigHeart{
+font-size:110px;
+cursor:pointer;
+display:none;
+margin-top:40px;
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+#photo{
+display:none;
+width:85%;
+max-width:350px;
+border-radius:20px;
+margin:auto;
+margin-top:60px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+opacity:0;
+transform:scale(0.5);
+transition:all 0.8s ease;
+}
+
+.floating{
+position:absolute;
+font-size:38px;
+cursor:pointer;
+user-select:none;
+animation:rise linear forwards;
+}
+
+@keyframes rise{
+0%{transform:translateY(100vh)}
+100%{transform:translateY(-10vh)}
+}
+
+.sparkle{
+position:absolute;
+font-size:20px;
+animation:spark 1s forwards;
+}
+
+@keyframes spark{
+0%{opacity:1; transform:scale(0)}
+100%{opacity:0; transform:scale(2)}
+}
+
+#desc,#choices,#angry,#lastStep,#loveyMsg,#final{
+display:none;
+padding:20px;
+max-width:700px;
+margin:auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Happy Mother's Day 🌸</h1>
+
+<p id="tap">Tap for a small surprise 🎁</p>
+
+<div id="gift" onclick="showDesc()">🎁</div>
+
+
+<div id="desc">
+
+<p>
+A small surprise made with love for the most important woman in my life ❤️
+</p>
+
+</div>
+
+
+<div id="choices">
+
+<button onclick="openGift()">Open 💖</button>
+
+<button onclick="ignoreGift()">Ignore 🙈</button>
+
+</div>
+
+
+<p id="angry"></p>
+
+
+<div id="bigHeart" onclick="startSurprise()">❤️</div>
+
+
+<img id="photo">
+
+
+<div id="lastStep">
+
+<button onclick="showLovey()">One more thing for you Maa ❤️</button>
+
+</div>
+
+
+<div id="loveyMsg">
+
+<p>
+
+Maa ❤️, pata hai na main itna express nahi karta but honestly thank you for always handling me and my nonsense 😭. Har baar daantne ke baad bhi mere liye hi tension lena, meri stupid baatein sunna, aur bina bole sab samajh jaana… you really are the besttt 💖. Aur haa, kabhi kabhi tang karta hu but love you sooo muchhh Maa 🌸❤️. Happy Mother’s Dayyy!!
+
+</p>
+
+<button onclick="showFinal()">Ok 💖</button>
+
+</div>
+
+
+<div id="final">
+
+<h2>Happy Mother's Day Maa 🌸</h2>
+
+<p>
+
+Tumhare liye gift shayad na la paaya…  
+but maine ye chota sa surprise dil se banaya hai ❤️
+
+</p>
+
+</div>
+
+
+<audio id="music">
+
+<source src="music.mp3" type="audio/mpeg">
+
+</audio>
+
+
+<script>
+
+let photos=[
+
+"photo1.jpg",
+"photo2.jpg",
+"photo3.jpg",
+"photo4.jpg",
+"photo5.jpg",
+"photo6.jpg",
+"photo7.jpg"
+
+];
+
+let current=0;
+
+let heartInterval;
+
+
+
+function showDesc(){
+
+document.getElementById("gift").style.display="none";
+
+document.getElementById("tap").style.display="none";
+
+document.getElementById("desc").style.display="block";
+
+document.getElementById("choices").style.display="block";
+
+}
+
+
+
+function ignoreGift(){
+
+let angry=document.getElementById("angry");
+
+angry.innerHTML="Mummyyyy 😭 you can't ignore thissss";
+
+angry.style.display="block";
+
+}
+
+
+
+function openGift(){
+
+document.getElementById("choices").style.display="none";
+
+document.getElementById("angry").style.display="none";
+
+document.getElementById("bigHeart").style.display="block";
+
+}
+
+
+
+function startSurprise(){
+
+document.getElementById("bigHeart").style.display="none";
+
+let music=document.getElementById("music");
+
+music.play();
+
+spawnHeart();
+
+heartInterval=setInterval(spawnHeart,1000);
+
+}
+
+
+
+function spawnHeart(){
+
+let heart=document.createElement("div");
+
+heart.innerHTML="💖";
+
+heart.className="floating";
+
+heart.style.left=Math.random()*90+"vw";
+
+let duration=Math.random()*3+6;
+
+heart.style.animationDuration=duration+"s";
+
+function tapHeart(){
+
+burstEffect(heart);
+
+showPhoto();
+
+heart.remove();
+
+}
+
+heart.addEventListener("click",tapHeart);
+
+heart.addEventListener("touchstart",tapHeart);
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},duration*1000);
+
+}
+
+
+
+function burstEffect(heart){
+
+for(let i=0;i<6;i++){
+
+let spark=document.createElement("div");
+
+spark.innerHTML="✨";
+
+spark.className="sparkle";
+
+spark.style.left=heart.offsetLeft+"px";
+
+spark.style.top=heart.offsetTop+"px";
+
+document.body.appendChild(spark);
+
+setTimeout(()=>{
+
+spark.remove();
+
+},1000);
+
+}
+
+}
+
+
+
+function showPhoto(){
+
+if(current>=photos.length){
+
+clearInterval(heartInterval);
+
+document.getElementById("photo").style.display="none";
+
+document.getElementById("lastStep").style.display="block";
+
+return;
+
+}
+
+
+
+let photo=document.getElementById("photo");
+
+photo.src=photos[current];
+
+photo.style.display="block";
+
+
+
+setTimeout(()=>{
+
+photo.style.opacity=1;
+
+photo.style.transform="scale(1)";
+
+},50);
+
+
+
+setTimeout(()=>{
+
+photo.style.opacity=0;
+
+photo.style.transform="scale(0.5)";
+
+},4500);
+
+
+
+setTimeout(()=>{
+
+photo.style.display="none";
+
+},5200);
+
+
+
+current++;
+
+}
+
+
+
+function showLovey(){
+
+document.getElementById("lastStep").style.display="none";
+
+document.getElementById("loveyMsg").style.display="block";
+
+
+
+let music=document.getElementById("music");
+
+music.pause();
+
+music.currentTime=0;
+
+}
+
+
+
+function showFinal(){
+
+document.getElementById("loveyMsg").style.display="none";
+
+document.getElementById("final").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
